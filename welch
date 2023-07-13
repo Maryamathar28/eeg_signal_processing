@@ -1,1 +1,19 @@
+clear all
+% Load the .set file
+EEG = pop_loadset('S13.set');
+
+% Extract the EEG data as a numeric array
+eeg_data = EEG.data;
+
+% Compute the PSD using pwelch
+fs = 500;
+windowLength = 4*fs;      % Length of each segment for PSD computation
+overlap = windowLength/2; % Overlap between segments
+nfft = windowLength;      % Number of FFT points
+
+psdFeature = [];  % Initialize empty matrix for PSD features
+for i = 1:size(eeg_data, 1)  % Iterate through each channel
+    [psd(i,:), freq] = pwelch(eeg_data(i,:), windowLength, overlap, nfft, fs);
+    %psdFeature{i} = psd(:,:);
+end
 
