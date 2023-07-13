@@ -1,0 +1,70 @@
+%BUTTERWORTH_FILTER
+
+clear all
+close all
+clc
+
+% Load EEG data from a file
+eegData = pop_loadset('S13.set');
+eegSignal = eegData.data; % Assuming the EEG signal is stored in a variable called 'eegSignal'
+
+% Convert EEG signal to double matrix
+eegSignal = double(eegSignal);
+
+% Define filter parameters
+fs = 250; % Sampling rate of the EEG data (in Hz)
+highPassCutoff = 1; % High-pass filter cutoff frequency (in Hz)
+lowPassCutoff = 40; % Low-pass filter cutoff frequency (in Hz)
+notchFrequency = 50; % Notch filter frequency (in Hz)
+filterOrder = 4; % Filter order
+
+% Design the Butterworth high-pass filter
+[b, a] = butter(filterOrder, highPassCutoff / (fs / 2), 'high');
+
+% Apply high-pass filtering using the Butterworth filter
+eegSignalFiltered = filtfilt(b, a, eegSignal);
+
+
+% Design the Butterworth low-pass filter
+[b, a] = butter(filterOrder, lowPassCutoff / (fs / 2), 'low');
+
+% Apply low-pass filtering using the Butterworth filter
+eegSignalFiltered = filtfilt(b, a, eegSignal);
+
+% Design the Butterworth notch filter
+[b, a] = butter(filterOrder, [(notchFrequency-1), (notchFrequency+1)] / (fs / 2), 'stop');
+
+% Apply notch filtering using the Butterworth filter
+eegSignalFiltered = filtfilt(b, a, eegSignal);
+
+
+% Create time vector
+numSamples = length(eegSignal);
+time = (0:numSamples-1) / fs;
+
+
+% Plot the original and filtered EEG signals
+figure;
+subplot(2, 3, 1);
+plot(time, eegSignal);
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('Original EEG Signal');
+
+subplot(2, 3, 2);
+plot(time, eegSignalFiltered);
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('High-Pass Filtered EEG Signal');
+
+subplot(2, 3, 3);
+plot(time, eegSignalFiltered);
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('Low-Pass Filtered EEG Signal');
+
+subplot(2, 3, 4);
+plot(time, eegSignalFiltered);
+xlabel('Time (s)');
+ylabel('Amplitude');
+title('Notch Filtered EEG Signal');
