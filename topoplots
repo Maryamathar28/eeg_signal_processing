@@ -1,0 +1,60 @@
+clear all
+clc
+
+load('D:\Neurofeedback 2\Group_01_AudioVisual\G1_QEEG_NR\features_without_noise\G1_POST_EO_NR\G1_Post_EO_NR');
+chanlocs = readlocs('Standard-10-10-Cap38.ced'); 
+
+a = G1_Post_EO_NR.rp_delta_mean_all_subj(:,:);
+subplot(3, 3, 1);
+title('DELTA');
+topoplot(a, chanlocs, 'style', 'map', 'electrodes', 'labels');
+colorbar;
+ 
+b = G1_Post_EO_NR.rp_theta_mean_all_subj(:,:);
+subplot(3, 3, 2);
+title('THETA');
+topoplot(b, chanlocs, 'style', 'map', 'electrodes', 'labels');
+colorbar;
+
+c = G1_Post_EO_NR.rp_alpha_mean_all_subj(:,:);
+subplot(3, 3, 3);
+title('ALPHA');
+topoplot(c, chanlocs, 'style', 'map', 'electrodes', 'labels');
+colorbar;
+
+d = G1_Post_EO_NR.rp_lower_alpha_mean_all_subj(:,:);
+subplot(3, 3, 4);
+title('LOWER ALPHA');
+topoplot(d, chanlocs, 'style', 'map', 'electrodes', 'labels');
+colorbar;
+
+e = G1_Post_EO_NR.rp_beta_mean_all_subj(:,:);
+subplot(3, 3, 5);
+title('BETA');
+topoplot(e, chanlocs, 'style', 'map', 'electrodes', 'labels');
+colorbar;
+
+f = G1_Post_EO_NR.rp_lower_beta_mean_all_subj(:,:);
+subplot(3, 3, 6);
+title('LOWER BETA');
+topoplot(f, chanlocs, 'style', 'map', 'electrodes', 'labels');
+colorbar;
+
+g = G1_Post_EO_NR.rp_mid_beta_mean_all_subj(:,:);
+subplot(3, 3, 7);
+title('MID BETA');
+topoplot(g, chanlocs, 'style', 'map', 'electrodes', 'labels');
+colorbar;
+
+h = G1_Post_EO_NR.rp_upper_beta_mean_all_subj(:,:);
+subplot(3, 3, 8);
+title('UPPER BETA');
+topoplot(h, chanlocs, 'style', 'map', 'electrodes', 'labels');
+colorbar;
+
+i = G1_Post_EO_NR.rp_gamma_mean_all_subj(:,:);
+subplot(3, 3, 9);
+title('GAMMA');
+topoplot(i, chanlocs, 'style', 'map', 'electrodes', 'labels');
+colorbar;
+
