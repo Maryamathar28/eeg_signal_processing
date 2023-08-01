@@ -1,0 +1,25 @@
+clear all
+clc
+
+load('D:\Neurofeedback 2\Group_01_AudioVisual\New folder\G1_Post_EC\f.mat');
+load('D:\Neurofeedback 2\Group_01_AudioVisual\New folder\G1_Post_EC\power.mat');
+
+
+% Extract the frequency and power data
+frequencies = f;
+power_data = power;
+
+
+% Choose the channel for which you want to plot the spectrum (e.g., channel 1)
+channel_index = 20;
+
+% Extract the power spectrum for the selected channel
+power_spectrum = power_data(channel_index, :);
+
+% Plot the power vs. frequency spectrum
+figure;
+plot(frequencies(1:1001,1), 10*log10(power_spectrum));
+title(['Power vs. Frequency Spectrum for Channel ', num2str(channel_index)]);
+xlabel('Frequency');
+ylabel('Power');
+grid on;
