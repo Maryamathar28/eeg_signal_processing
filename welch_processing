@@ -2,7 +2,9 @@ clear all
 clc
 
 myFolder = 'D:\Neurofeedback 2\Group_01_AudioVisual\G1_QEEG_NR\POST_QEEG\EO\noise removal\';
+
 Files_dir =dir(fullfile(myFolder,'*.set'));
+%save_location = 'D:\NCAI-Neurocomputation Lab\Custom tDCS Experiments\MindFoster_tDCS_Paper\Data\6_38 Channels Data in SET for processing after ICA\MindFoster\With Respect to Disease Condition\Depression\Depressed';
 
 EEG_Data = {};
 for k = 1:(length(Files_dir))
@@ -22,9 +24,9 @@ for i = 1:length (Files_dir);
     name = EEG_Data{i};
     sub_name{i} = name.filename;
     for j=1:38;
-        name.data;
-        [power(j,:),f] = pwelch(name.data(j,:),windowLength,noverlap,nfft,fs);
-        p(i,j,:) = power(j,:);
+%         name.data;
+        [wrong_eo_post_power(j,:),f] = pwelch(name.data(j,:),windowLength,noverlap,nfft,fs);
+        p(i,j,:) = wrong_eo_post_power(j,:);
         delta = find(f>=0 & f<4);
         theta = find(f>=4 & f<8);
         alpha = find(f>=8 & f<12);
@@ -116,24 +118,25 @@ G1_Post_EO_NR.rp_mid_beta_mean_all_subj = rp_mid_beta_mean_all_subj;
 G1_Post_EO_NR.rp_upper_beta_mean_all_subj = rp_upper_beta_mean_all_subj;
 G1_Post_EO_NR.rp_gamma_mean_all_subj = rp_gamma_mean_all_subj;
 
-save('D:\Neurofeedback 2\Group_01_AudioVisual\G1_QEEG_NR\features_without_noise\G1_POST_EO_NR\power.mat', 'power');  % Save the PSD data
-save('D:\Neurofeedback 2\Group_01_AudioVisual\G1_QEEG_NR\features_without_noise\G1_POST_EO_NR\f.mat', 'f');  % Save the frequency data
-save('D:\Neurofeedback 2\Group_01_AudioVisual\G1_QEEG_NR\features_without_noise\G1_POST_EO_NR\G1_Post_EO_NR', 'G1_Post_EO_NR')
+% save('D:\Neurofeedback 2\Group_01_AudioVisual\G1_QEEG_NR\POST_QEEG\EO\noise removal\wrong_Subj_welch\wrong_post_eo\feature_wrong\wrong_eo_post_power.mat', 'wrong_eo_post_power');  % Save the PSD data
+% save('D:\Neurofeedback 2\Group_01_AudioVisual\G1_QEEG_NR\POST_QEEG\EO\noise removal\wrong_Subj_welch\wrong_post_eo\feature_wrong\f.mat', 'f');  % Save the frequency data
+% save('D:\Neurofeedback 2\Group_01_AudioVisual\G1_QEEG_NR\POST_QEEG\EO\noise removal\wrong_Subj_welch\wrong_post_eo\feature_wrong\wrong_post_EO', 'wrong_post_EO')
+save('D:\Neurofeedback 2\Group_01_AudioVisual\G1_QEEG_NR\features_without_noise\G1\G1_Post_EO_NR', 'G1_Post_EO_NR')
 
 % plot(f(1:1001,1), (power(1:38,1:1001)))
 % xlabel frequency
 % ylabel power
 % title 'G1 PRE EO'
 
-figure;
-plot(f(1:1001), 10*log10(power(1:38,1:1001)));
-xlabel('Frequency');
-ylabel('Power');
-title('Power Spectrum for G1 POST EO NR');
-
-% Add a legend for each channel
-channel_names = cell(1, 38);
-for i = 1:38
-    channel_names{i} = sprintf('Channel %d', i);  % Replace with actual channel names if available
-end
-legend(channel_names);
+% figure;
+% plot(f(1:1001), 10*log10(post_power(1:38,1:1001)));
+% xlabel('Frequency');
+% ylabel('Power');
+% title('Power Spectrum for G1 POST EO NR');
+% 
+% % Add a legend for each channel
+% channel_names = cell(1, 38);
+% for i = 1:38
+%     channel_names{i} = sprintf('Channel %d', i);  % Replace with actual channel names if available
+% end
+% legend(channel_names);
